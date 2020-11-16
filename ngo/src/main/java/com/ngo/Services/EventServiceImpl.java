@@ -6,10 +6,15 @@ import com.ngo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@Transactional
 public class EventServiceImpl implements EventService{
 
     @Autowired
@@ -62,6 +67,22 @@ public class EventServiceImpl implements EventService{
             eventObj.setVenue(event.getVenue());
             Event _event = eventRepository
                     .save(eventObj);
+            return new ResponseEntity<>(_event, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Event> registerForEvent(long userId, long eventId){
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Error: User is not found."));
+            Event event = eventRepository.findById(eventId)
+                    .orElseThrow(() -> new RuntimeException("Error: Event is not found."));
+            event.getVolunteers().add(user);
+            Event _event = eventRepository
+                    .save(event);
             return new ResponseEntity<>(_event, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

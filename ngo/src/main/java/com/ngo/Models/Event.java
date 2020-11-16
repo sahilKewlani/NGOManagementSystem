@@ -31,8 +31,8 @@ public class Event {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "event_volunteer",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> volunteers = new HashSet<>();
 
     public Long getId() {

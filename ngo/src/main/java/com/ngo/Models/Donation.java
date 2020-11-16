@@ -1,20 +1,24 @@
 package com.ngo.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name="donation")
-public class Donation {
+public class Donation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Size(max = 20)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String transactionId;
 
     @NotBlank
@@ -23,8 +27,9 @@ public class Donation {
     @NotBlank
     private Date date;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "donor_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "user_id", nullable = false)
     private User donor;
 
     public Long getId() {

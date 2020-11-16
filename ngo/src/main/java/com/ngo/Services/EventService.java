@@ -10,4 +10,5 @@ public interface EventService {
     public ResponseEntity<List<Event>> getAllEvents();
     public ResponseEntity<List<Event>> findByVolunteers(long userId);
     public ResponseEntity<Event> addEvent(Event event);
+    public ResponseEntity<Event> registerForEvent(long userId, long eventId);
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 @RequestMapping("/api/test")
 public class TestController {
 
@@ -63,16 +63,22 @@ public class TestController {
         return eventService.findByVolunteers(userId);
     }
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
+    @GetMapping("/getDonations/{id}")
+    @PreAuthorize("hasRole('DONOR')")
+    public ResponseEntity<List<Donation>> donorDonations(@PathVariable("id") long userId) {
+        return donationService.getDonations(userId);
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public String userAccess() {
-        return "User Content.";
+    @PostMapping("/donate/{id}")
+    @PreAuthorize("hasRole('DONOR')")
+    public ResponseEntity<?> donate(@PathVariable("id") long userId, @RequestBody Donation donation) {
+        return donationService.donate(userId, donation);
+    }
+
+    @PostMapping("/{id}/registerFor/{eventId}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    public ResponseEntity<?> registerForEvent(@PathVariable("id") long userId, @PathVariable("eventId") long eventId) {
+        return eventService.registerForEvent(userId, eventId);
     }
 
 }

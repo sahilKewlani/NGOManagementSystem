@@ -42,9 +42,9 @@ public class User {
             cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToMany(mappedBy = "donor", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<Donation> donations;
+//    @OneToMany(mappedBy = "donor", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private Set<Donation> donations;
 
     public User() {
     }
@@ -103,12 +103,12 @@ public class User {
         this.address = address;
     }
 
-    public Set<Donation> getDonations() {
-        return donations;
-    }
-
-    public void setDonations(Set<Donation> donations) {
-        this.donations = donations;
-    }
+//    public Set<Donation> getDonations() {
+//        return donations;
+//    }
+//
+//    public void setDonations(Set<Donation> donations) {
+//        this.donations = donations;
+//    }
 
 }
