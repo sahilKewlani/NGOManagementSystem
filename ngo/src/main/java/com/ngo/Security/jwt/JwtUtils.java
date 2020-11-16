@@ -21,6 +21,9 @@ public class JwtUtils {
     @Value("${ngo.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
+    @Value("${ngo.app.clientKey}")
+    private String clientKey;
+
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -54,5 +57,13 @@ public class JwtUtils {
         }
 
         return false;
+    }
+
+    public String getClientKey() {
+        return clientKey;
+    }
+
+    public void setClientKey(String clientKey) {
+        this.clientKey = clientKey;
     }
 }

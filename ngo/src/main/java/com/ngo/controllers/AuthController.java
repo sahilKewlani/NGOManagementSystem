@@ -1,15 +1,11 @@
 package com.ngo.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import com.ngo.Models.ERole;
-import com.ngo.Models.Role;
-import com.ngo.Models.User;
+import com.ngo.Models.*;
 import com.ngo.Payload.Request.LoginRequest;
 import com.ngo.Payload.Request.SignupRequest;
 import com.ngo.Payload.Response.JwtResponse;
@@ -19,6 +15,7 @@ import com.ngo.Repository.UserRepository;
 import com.ngo.Security.Services.UserDetailsImpl;
 import com.ngo.Security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,7 +48,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @PostMapping("z")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -93,42 +90,41 @@ public class AuthController {
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
+        String secretKey = signUpRequest.getSecretKey();
+        String clientKey = jwtUtils.getClientKey();
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_VOLUNTEER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
-            strRoles.forEach(role -> {
+            for(String role : strRoles) {
                 switch (role) {
-                    case "admin": {
+                    case "admin":
+                        if (clientKey.compareTo(secretKey) != 0) {
+                            return ResponseEntity
+                                    .badRequest()
+                                    .body(new MessageResponse("Error: Incorrect Secret Key!"));
+                        }
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found. " + role));
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    }
-                    case "mod": {
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                    case "volunteer":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_VOLUNTEER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
 
                         break;
-                    }
-                    case "don": {
+                    case "donor":
                         Role donRole = roleRepository.findByName(ERole.ROLE_DONOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(donRole);
 
                         break;
-                    }
-                    default: {
-                        Role userRole = roleRepository.findByName(ERole.ROLE_VOLUNTEER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                    }
                 }
-            });
+            };
         }
 
         user.setRoles(roles);
