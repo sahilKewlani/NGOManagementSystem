@@ -1,1 +1,66 @@
-<p>board-volunteer works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="column"><h2>Events participated in:</h2></div>
+        <div class="column">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Venue</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+            <tbody>
+            <tr *ngFor="let event of registeredEvents">
+              <td>{{ event.name }}</td>
+              <td>{{ event.venue }}</td>
+              <td>{{ event.date | date:'MM/dd/yyyy' }}</td>            
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      
+      </div>
+      
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" (click)="Register()">Register for Event</button>
+    </div>
+    <div class="row" *ngIf="registerEvent">
+        <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <mat-form-field>
+            <label for="events">Upcoming events</label>
+            <mat-select class="custom-select"
+            [(ngModel)]="form.events"
+            name="events"
+              required
+              #events="ngModel"> 
+              <mat-option *ngFor="let event of allEvents" [value]="event.id">{{ event.name }}</mat-option>
+           </mat-select>
+            <div class="alert-danger" *ngIf="f.submitted && events.invalid">
+              <div *ngIf="events.errors.required">Event is required</div>
+            </div>
+  
+          </mat-form-field>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">Sign Up for event</button>
+          </div>
+    
+          <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+            Signup failed!<br />{{ errorMessage }}
+          </div>
+        </form>
+    
+        <div class="alert alert-success" *ngIf="isSuccessful">
+          Your registration is successful!
+        </div>
+      </div>
+      </div>

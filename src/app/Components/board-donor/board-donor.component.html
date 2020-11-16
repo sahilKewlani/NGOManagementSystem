@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="column"><h2>Past Donations made:</h2></div>
+        <div class="column">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+            <tbody>
+            <tr *ngFor="let donation of pastDonations">
+              <td>{{ donation.id }}</td>
+              <td>{{ donation.amount }}</td>
+              <td>{{ donation.date | date:'MM/dd/yyyy' }}</td>            
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      
+      </div>
+      
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" (click)="register()">Donate</button>
+    </div>
+    <div class="row" *ngIf="Donate">
+        <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input
+            type="text"
+            class="form-control"
+            name="amount"
+            [(ngModel)]="form.amount"
+            required
+            digit-only
+            #amount="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && amount.invalid">
+            <div *ngIf="amount.errors.required">Amount is required</div>
+            </div>
+        </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">Donate</button>
+          </div>
+    
+          <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+            Donation failed<br />{{ errorMessage }}
+          </div>
+        </form>
+    
+        <div class="alert alert-success" *ngIf="isSuccessful">
+          Your registration is successful!
+        </div>
+      </div>
+      </div>

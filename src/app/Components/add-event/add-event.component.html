@@ -1,0 +1,95 @@
+<div class="col-md-12">
+    
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="form.name"
+          required
+          minlength="3"
+          maxlength="20"
+          #name="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && name.invalid">
+          <div *ngIf="name.errors.required">Name is required</div>
+          <div *ngIf="name.errors.minlength">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="name.errors.maxlength">
+            Username must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="description"
+          [(ngModel)]="form.description"
+          required
+          #description="ngModel"
+        ></textarea>
+        <div class="alert-danger" *ngIf="f.submitted && description.invalid">
+          <div *ngIf="description.errors.required">Description is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group">
+            <label for="venue">Venue</label>
+            <input
+              type="text"
+              class="form-control"
+              name="venue"
+              [(ngModel)]="form.venue"
+              required
+              minlength="3"
+              maxlength="20"
+              #venue="ngModel"
+            />
+            <div class="alert-danger" *ngIf="f.submitted && venue.invalid">
+              <div *ngIf="venue.errors.required">Venue is required</div>
+              <div *ngIf="venue.errors.minlength">
+                Venue must be at least 3 characters
+              </div>
+              <div *ngIf="venue.errors.maxlength">
+                Venue must be at most 20 characters
+              </div>
+            </div>
+          </div>
+        <label for="date">Event Date</label>
+        <input
+          type="date"
+          class="form-control"
+          name="date"
+          [(ngModel)]="form.date"
+          required
+          #date="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && date.invalid">
+          <div *ngIf="date.errors.required">Date is required</div>
+        </div>
+      </div>
+      
+     
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Sign Up</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your registration is successful!
+    </div>
+  </div>

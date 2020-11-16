@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
 
 import { TokenStorageService } from '../../Services/token-storage.service';
 
@@ -10,9 +12,12 @@ import { TokenStorageService } from '../../Services/token-storage.service';
 export class ProfileComponent implements OnInit {
   currentUser: any;
 
-  constructor(private token: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit() {
-    this.currentUser = this.token.getUser();
+    if (!this.tokenStorage.getToken()) {
+      this.router.navigate(['/']);
+    }
+    this.currentUser = this.tokenStorage.getUser();
   }
 }

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../Services/auth.service';
-import { TokenStorageService } from '../../Services/token-storage.service';
+import { AuthService } from 'src/app/Services/auth.service';
+import { TokenStorageService } from 'src/app/Services/token-storage.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class AdminLoginComponent implements OnInit {
   form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
@@ -21,12 +21,8 @@ export class LoginComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
-      if(this.roles[0]==="ROLE_DONOR")
-      this.router.navigate(['/donor-board']);
-      else if(this.roles[0]==="ROLE_ADMIN")
-      this.router.navigate(['/admin-board']);
-      else if(this.roles[0]==="ROLE_VOLUNTEER")
-      this.router.navigate(['/volunteer-board']);
+      console.log(this.tokenStorage.getUser().email);
+      this.router.navigate(['/']);
     }
   }
 

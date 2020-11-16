@@ -1,10 +1,5 @@
 <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
+    
       <form
         *ngIf="!isSuccessful"
         name="form"
@@ -69,7 +64,23 @@
               Password must be at least 6 characters
             </div>
           </div>
+
         </div>
+        <mat-form-field>
+          <label for="role">Register as</label>
+          <mat-select class="custom-select"
+          [(ngModel)]="form.role"
+          name="role"
+            required
+            #role="ngModel" multiple="multiple"> 
+            <mat-option value="donor">Donor</mat-option>
+            <mat-option value="volunteer">Volunteer</mat-option>
+         </mat-select>
+          <div class="alert-danger" *ngIf="f.submitted && role.invalid">
+            <div *ngIf="role.errors.required">Role is required</div>
+          </div>
+
+        </mat-form-field>
         <div class="form-group">
           <button class="btn btn-primary btn-block">Sign Up</button>
         </div>
@@ -83,4 +94,3 @@
         Your registration is successful!
       </div>
     </div>
-  </div>

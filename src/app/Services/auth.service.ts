@@ -23,10 +23,25 @@ export class AuthService {
   }
 
   register(user): Observable<any> {
+    console.log
+    if(user.role=="admin")
+    {
+
+      return this.http.post(AUTH_API + 'signup', {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        role: user.role,
+        secretKey: user.secretKey,
+      }, httpOptions);
+    }
+    else{
     return this.http.post(AUTH_API + 'signup', {
       username: user.username,
       email: user.email,
-      password: user.password
+      password: user.password,
+      role: user.role,
     }, httpOptions);
+  }
   }
 }

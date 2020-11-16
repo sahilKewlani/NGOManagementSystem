@@ -1,5 +1,98 @@
 <div class="container">
-    <header class="jumbotron">
-      <p>{{ content }}</p>
-    </header>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="column"><h2>Donors:</h2></div>
+      <div class="column">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>User Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+          <tbody>
+          <tr *ngFor="let donor of donors">
+            <td>{{ donor.username }}</td>
+            <td>{{ donor.email }}</td>            
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      
+    
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+      <div class="column"><h2>Volunteers:</h2></div>
+      <div class="column">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>User Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+          <tbody>
+          <tr *ngFor="let volunteer of volunteers">
+            <td>{{ volunteer.username }}</td>
+            <td>{{ volunteer.email }}</td>            
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
   </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="column"><h2>Donations:</h2></div>
+      <div class="column">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Owner</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+          <tbody>
+          <tr *ngFor="let donation of donations">
+            <td>{{ donation.id }}</td>
+            <td>{{ donation.donor.username }}</td>
+            <td>{{ donation.amount }}</td>
+            <td>{{ donation.date | date:'MM/dd/yyyy' }}</td>            
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      
+    
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+      <div class="column"><h2>Events:</h2></div>
+      <div class="column">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Event Name</th>
+            <th>Venue</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+          <tbody>
+          <tr *ngFor="let event of events">
+            <td>{{ event.name }}</td>
+            <td>{{ event.venue }}</td>
+            <td>{{ event.date | date:'MM/dd/yyyy' }}</td>            
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <a routerLink="/add-event">Add new event?</a>
+    </div>
+  </div>
+</div>
