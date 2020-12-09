@@ -22,6 +22,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BoardDonorComponent } from './Components/board-donor/board-donor.component';
 import { AddEventComponent } from './Components/add-event/add-event.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AddEventComponent } from './Components/add-event/add-event.component';
     FormsModule,
     HttpClientModule,
     MatSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [authInterceptorProviders,  {provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]
