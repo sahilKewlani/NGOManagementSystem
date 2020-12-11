@@ -7,7 +7,7 @@ This is a web application which can be used to manage all the operations of NGO.
 
 ### Technology Stack
 
-Personal Music Library uses a number of open source projects to work properly:
+NGO Management System uses a number of open source projects to work properly:
 
 * [Angular CLI](https://github.com/angular/angular-cli) - HTML enhanced for web apps!
 * [Java Spring](https://spring.io/) - application development framework for the backend
