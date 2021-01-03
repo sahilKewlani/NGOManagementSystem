@@ -52,7 +52,7 @@ public class TestController {
     }
 
     @GetMapping("/allEvents")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('VOLUNTEER')")
     public ResponseEntity<List<Event>> allEvents() {
         return eventService.getAllEvents();
     }
