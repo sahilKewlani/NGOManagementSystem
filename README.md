@@ -2,8 +2,8 @@
 
 This is a web application which can be used to manage all the operations of NGO.
 
-[BACKEND REPO LINK](https://github.com/sahilKewlani/NGOManagementSystem/tree/frontend)  
-[FRONTEND REPO LINK](https://github.com/sahilKewlani/NGOManagementSystem/tree/backend)
+[BACKEND REPO LINK](https://github.com/sahilKewlani/NGOManagementSystem/tree/backend)  
+[FRONTEND REPO LINK](https://github.com/sahilKewlani/NGOManagementSystem/tree/frontend)
 
 ### Technology Stack
 
